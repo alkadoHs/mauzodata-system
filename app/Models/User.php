@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
-class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasTenants
 {
     use HasFactory, Notifiable;
 
@@ -62,6 +62,24 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+
+    public function creditSales(): HasMany
+    {
+        return $this->hasMany(CreditSale::class);
+    }
+
+
+    public function creditSalePayments(): HasMany
+    {
+        return $this->hasMany(CreditSalePayment::class);
+    }
+
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
     }
 
 

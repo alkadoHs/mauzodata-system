@@ -40,4 +40,28 @@ class Team extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+
+    public function creditSales(): HasMany
+    {
+        return $this->hasMany(CreditSale::class);
+    }
+
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+
+    public function newStocks(): HasMany
+    {
+        return $this->hasMany(NewStock::class);
+    }
+
+
+    public function damages(): HasMany
+    {
+        return $this->hasMany(Damage::class);
+    }
 }

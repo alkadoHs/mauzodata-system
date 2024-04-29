@@ -1,3 +1,53 @@
-@import '/vendor/filament/filament/resources/css/theme.css';
+@import "/vendor/filament/filament/resources/css/theme.css";
 
 @config 'tailwind.config.js';
+
+.fi-simple-layout {
+    @apply bg-gradient-to-br from-gray-950 via-gray-900 to-rose-950
+}
+
+.fi-panel-app {
+    @apply bg-gray-100 dark:!bg-slate-950;
+}
+
+.fi-topbar > nav {
+    @apply dark:!bg-slate-900
+}
+
+.fi-ta-ctn {
+    @apply dark:!bg-slate-900
+}
+
+.fi-breadcrumbs {
+    display: block;
+}
+
+.fi-ta-cell {
+    @apply !ps-0 !pe-0;
+}
+
+.fi-modal {
+    @apply dark:!bg-slate-900;
+}
+
+.fi-section {
+    @apply dark:!bg-slate-900;
+}
+
+.fi-fo-repeater {
+    @apply dark:!bg-slate-900;
+}
+
+
+
+.fi-simple-main {
+    @apply bg-gray-100;
+}
+
+.fi-sidebar {
+    @apply bg-gray-100
+}
+
+.fi-sidebar-open {
+    @apply dark:!bg-slate-900 !bg-gray-50 !shadow
+}

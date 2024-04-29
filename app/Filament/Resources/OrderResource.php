@@ -49,8 +49,7 @@ class OrderResource extends Resource
                                     ->required()
                                     ->maxLength(30),
                                 Forms\Components\TextInput::make('conatct')
-                                    ->label('Label(phone,email,address etc')
-                                    ->required(),
+                                    ->label('Label(phone,email,address etc'),
                                 Forms\Components\Hidden::make('team_id')
                                     ->default(Filament::getTenant()->id)
                                     ->required(),
@@ -62,9 +61,9 @@ class OrderResource extends Resource
                             ->maxLength(255),
                         ]),
 
-                TableRepeater::make('orderItems')
+                Repeater::make('orderItems')
                         ->relationship()
-                        // ->columns(3)
+                        ->columns(3)
                         ->columnSpanFull()
                         ->addActionLabel('Add Item')
                         ->mutateRelationshipDataBeforeCreateUsing(function (array $data) {
@@ -75,7 +74,7 @@ class OrderResource extends Resource
                             Select::make('product_id')
                                 ->label(__('Product'))
                                 ->placeholder('Select product')
-                                ->relationship('product', 'title', fn (Builder $query) => $query->where([['team_id',Filament::getTenant()->id], ['stock', '>', 0]]))
+                                ->relationship('product', 'title', fn (Builder $query) => $query->where([['team_id',Filament::getTenant()->id]]))
                                 ->searchable()
                                 ->preload()
                                 ->disableOptionsWhenSelectedInSiblingRepeaterItems()
@@ -86,6 +85,7 @@ class OrderResource extends Resource
                                 ->label('Qty')
                                 ->live(onBlur: true)
                                 ->default(1)
+                                ->suffix(fn (Get $get): string => Product::find($get('product_id'))?->unit ?? 'each')
                                 ->mask(RawJs::make('$money($input)'))
                                 ->afterStateUpdated(function (?string $state, Get $get, Set $set) {
                                     $product = Product::find($get('product_id'));
@@ -166,7 +166,7 @@ class OrderResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                     Tables\Columns\TextColumn::make('invoice_number')
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('price')
+                Tables\Columns\TextColumn::make('price')
                     ->numeric()
                     ->state(fn (Order $order) => $order->orderItems->reduce(fn ($acc, $item) => $acc + $item->price * $item->quantity, 0)),
                 Tables\Columns\TextColumn::make('paymentMethod.name')
