@@ -49,7 +49,7 @@ class OrderResource extends Resource
                                     ->required()
                                     ->maxLength(30),
                                 Forms\Components\TextInput::make('conatct')
-                                    ->label('Label(phone,email,address etc'),
+                                    ->label('Contact(phone,email,address etc'),
                                 Forms\Components\Hidden::make('team_id')
                                     ->default(Filament::getTenant()->id)
                                     ->required(),
@@ -174,10 +174,12 @@ class OrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Date')
                     ->dateTime('d/m/Y H:m')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Date Updated')
                     ->dateTime('d/m/Y H:m')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

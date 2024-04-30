@@ -58,6 +58,10 @@ class ExpenseResource extends Resource
                 TextColumn::make('expenses')
                     ->state(fn (Expense $expense) => $expense->expenseItems->reduce(fn ($acc, $item) => $acc + $item->cost) )
                     ->numeric(),
+                TextColumn::make('created_at')
+                    ->label('Date')
+                    ->dateTime('d/m/Y H:m')
+                    ->toggleable()
             ])
             ->filters([
                 //

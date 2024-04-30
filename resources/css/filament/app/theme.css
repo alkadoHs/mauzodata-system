@@ -49,5 +49,5 @@
 }
 
 .fi-sidebar-open {
-    @apply dark:!bg-slate-900 !bg-gray-50 !shadow
+    @apply dark:!bg-slate-900 !bg-gray-50 !shadow !dark;
 }
