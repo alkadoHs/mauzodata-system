@@ -19,6 +19,7 @@ class Product extends Model
         'buy_price',
         'sale_price',
         'stock',
+        'stock_alert',
         'discount_stock',
         'discount_price',
         'expire_date',

@@ -19,7 +19,7 @@ class UserResource extends Resource
 
     protected static ?string $tenantOwnershipRelationshipName = 'teams';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -32,8 +32,16 @@ class UserResource extends Resource
                     ->required()
                     ->email()
                     ->maxLength(50),
+                Forms\Components\Select::make('role')
+                    ->options([
+                        'admin' => 'Admin',
+                        'seller' => 'Seller',
+                    ])
+                    ->native(false)
+                    ->required(),
                 Forms\Components\TextInput::make('password')
                     ->required()
+                    ->hidden(fn ( string $operation ): bool => $operation !== 'create')
                     ->maxLength(30),
             ]);
     }
@@ -47,7 +55,12 @@ class UserResource extends Resource
                     
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('email')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('role')
+                    ->sortable()
+                    ->badge()
+                    ->color('badge'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Date added'))
                     ->toggleable(),

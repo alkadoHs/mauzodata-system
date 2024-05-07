@@ -14,6 +14,8 @@ class Expense extends Model
     protected $fillable = ['user_id', 'team_id'];
 
 
+    protected $with = ['expenseItems'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

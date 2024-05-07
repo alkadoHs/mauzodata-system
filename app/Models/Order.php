@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -13,6 +14,8 @@ class Order extends Model
 
     protected $fillable = ['team_id', 'user_id', 'customer_id', 'payment_method_id', 'invoice_number', 'status'];
 
+
+    protected $with = ['orderItems'];
 
     public function team(): BelongsTo
     {
@@ -41,5 +44,10 @@ class Order extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function creditSale(): HasOne
+    {
+        return $this->hasOne(CreditSale::class);
     }
 }

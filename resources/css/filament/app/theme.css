@@ -2,12 +2,8 @@
 
 @config 'tailwind.config.js';
 
-.fi-simple-layout {
-    @apply bg-gradient-to-br from-gray-950 via-gray-900 to-rose-950
-}
-
 .fi-panel-app {
-    @apply bg-gray-100 dark:!bg-slate-950;
+    @apply bg-stone-200/80 dark:!bg-slate-950;
 }
 
 .fi-topbar > nav {
@@ -38,11 +34,15 @@
     @apply dark:!bg-slate-900;
 }
 
-
+.fi-simple-layout {
+    @apply bg-gradient-to-br from-green-100 via-orange-100 to-slate-200
+         dark:bg-gradient-to-br dark:from-slate-950 dark:via-green-950/50 dark:to-rose-950/10
+}
 
 .fi-simple-main {
-    @apply bg-gray-100;
+    @apply bg-slate-500/10 dark:!bg-slate-500/5;
 }
+
 
 .fi-sidebar {
     @apply bg-gray-100
@@ -50,4 +50,15 @@
 
 .fi-sidebar-open {
     @apply dark:!bg-slate-900 !bg-gray-50 !shadow !dark;
+}
+
+.fi-sidebar-header {
+    @apply dark:!bg-slate-900
+}
+
+
+/* Stats */
+
+.fi-wi-stats-overview-stat {
+    @apply dark:!bg-slate-900;
 }

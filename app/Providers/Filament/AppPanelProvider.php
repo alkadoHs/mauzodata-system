@@ -9,6 +9,7 @@ use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -33,9 +34,11 @@ class AppPanelProvider extends PanelProvider
             ->spa()
             ->sidebarCollapsibleOnDesktop()
             ->colors([
-                'primary' => Color::Violet,
+                'primary' => Color::Green,
+                'success' => Color::Emerald,
+                'badge' => Color::Sky,
             ])
-            ->font('Montserrat')
+            ->font('Inter')
             ->tenant(Team::class)
             ->tenantRegistration(RegisterTeam::class)
             ->tenantProfile(EditTeamProfile::class)
@@ -45,14 +48,16 @@ class AppPanelProvider extends PanelProvider
             ->passwordReset()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
+            ->pages([])
+            // ->navigationItems([
+            //     NavigationItem::make('Sellers Report')
+            //         ->group('Reports')
+            // ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->databaseNotifications()
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->plugins([
                 //
