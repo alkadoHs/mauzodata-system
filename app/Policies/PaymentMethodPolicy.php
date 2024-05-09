@@ -15,7 +15,7 @@ class PaymentMethodPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -23,7 +23,7 @@ class PaymentMethodPolicy
      */
     public function view(User $user, PaymentMethod $paymentMethod): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -31,7 +31,7 @@ class PaymentMethodPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -39,7 +39,7 @@ class PaymentMethodPolicy
      */
     public function update(User $user, PaymentMethod $paymentMethod): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -47,7 +47,7 @@ class PaymentMethodPolicy
      */
     public function delete(User $user, PaymentMethod $paymentMethod): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -55,11 +55,11 @@ class PaymentMethodPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     public function forceDeleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 }

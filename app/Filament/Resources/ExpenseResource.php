@@ -11,6 +11,7 @@ use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -27,12 +28,22 @@ class ExpenseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Hidden::make('user_id')
                     ->default(auth()->id())
+                    ->required(),
+                Select::make('payment_method_id')
+                    ->relationship(
+                        name: 'paymentMethod',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id)
+                    )
+                    ->native(false)
                     ->required(),
                 Repeater::make('expenseItems')
                     ->relationship()
@@ -57,7 +68,7 @@ class ExpenseResource extends Resource
         return $table
             ->modifyQueryUsing(
                 fn (Builder $query) => auth()->user()->role !== 'admin' ?
-                    $query->where('user_id', auth()->id())->latest() :
+                    $query->where('user_id', auth()->id())->whereDate('created_at', now())->latest() :
                     $query->latest()
             )
             ->defaultPaginationPageOption(25)
@@ -73,6 +84,9 @@ class ExpenseResource extends Resource
                             ) 
                         )
                     ->numeric(),
+                TextColumn::make('paymentMethod.name')
+                    ->label('Account')
+                    ->placeholder('--##--'),
                 TextColumn::make('created_at')
                     ->label('Date')
                     ->dateTime('d/m/Y H:m')

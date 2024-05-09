@@ -37,7 +37,7 @@ class OrderItemPolicy
      */
     public function update(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -45,7 +45,7 @@ class OrderItemPolicy
      */
     public function delete(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class OrderItemPolicy
      */
     public function restore(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +61,6 @@ class OrderItemPolicy
      */
     public function forceDelete(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 }

@@ -11,7 +11,7 @@ class Expense extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'team_id'];
+    protected $fillable = ['user_id', 'team_id', 'payment_method_id'];
 
 
     protected $with = ['expenseItems'];
@@ -31,6 +31,11 @@ class Expense extends Model
     public function expenseItems(): HasMany
     {
         return $this->hasMany(ExpenseItem::class);
+    }
+
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
     
 }

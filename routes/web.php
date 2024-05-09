@@ -5,8 +5,7 @@ use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $company = "Mauzodata Store";
-    return view('welcome', ['company' => $company]);
+    return redirect('https://home.mauzodata.com');
 });
 
 Route::get('/invoices/{order}', [InvoiceController::class, 'show'])->name('invoices.index')->middleware('auth');

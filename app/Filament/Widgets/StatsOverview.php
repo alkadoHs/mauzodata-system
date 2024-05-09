@@ -3,7 +3,9 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Expense;
+use App\Models\ExpenseItem;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Filament\Facades\Filament;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
@@ -35,6 +37,9 @@ class StatsOverview extends BaseWidget
                     ->count();
                     
         $sales = Order::query()
+            ->when(!$startDate && !$endDate, function (Builder $query) {
+                return $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', now());
+            })
             ->when(
             $startDate, fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', '>=', $startDate)
             )
@@ -42,19 +47,33 @@ class StatsOverview extends BaseWidget
             $endDate, fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', '<=', $endDate)
             )
             ->get()->reduce(
-                    fn($total, $item) => $total + $item->orderItems->reduce(fn($total2, $item2) => $total2 + $item2->price * $item2->quantity, 0), 0);
+                    fn($total, $item) => $total + $item->orderItems->reduce(fn($total2, $item2) => $total2 + $item2->total_price, 0), 0);
 
-        $profit = Order::query()
-            ->when($startDate, fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id))->whereDate('created_at', '>=', $startDate)
-            ->when($endDate, fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id))->whereDate('created_at', '<=', $endDate)
+        $profit = OrderItem::query()
+            ->when(!$startDate && !$endDate, function (Builder $query) {
+                return $query->whereRelation('order', 'team_id', Filament::getTenant()->id)->whereDate('created_at', now());
+            })
+            ->when($startDate, function (Builder $query) use($startDate) {
+                return $query->whereRelation('order', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '>=', $startDate);
+            }) 
+            ->when($endDate, function (Builder $query) use($endDate) {
+                return $query->whereRelation('order', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '<=', $endDate);
+            })
             ->get()->reduce(
-                    fn($total, $item) => $total + $item->orderItems->reduce(fn($total2, $item2) => $total2 + ($item2->price - $item2->product->buy_price) * $item2->quantity, 0), 0);
+                    fn($total, $item) => $total + $item->profit, 0);
 
-        $expenses = Expense::query()
-            ->when($startDate, fn(Builder $query) => $query->where('team_id', Filament::getTenant()->id))->whereDate('created_at', '>=', $startDate)
-            ->when($endDate, fn(Builder $query) => $query->where('team_id', Filament::getTenant()->id))->whereDate('created_at', '<=', $endDate)
+        $expenses = ExpenseItem::query()
+            ->when(!$startDate && !$endDate, function (Builder $query) {
+                return $query->whereRelation('expense', 'team_id', Filament::getTenant()->id)->whereDate('created_at', now());
+            })
+            ->when($startDate, function (Builder $query) use($startDate) {
+                return $query->whereRelation('expense', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '>=', $startDate);
+            })
+            ->when($endDate, function (Builder $query) use($endDate) {
+                return $query->whereRelation('expense', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '<=', $endDate);
+            })
             ->get()->reduce(
-            fn($total, $item) => $total + $item->expenseItems->reduce(fn($total2, $item2) => $total2 + $item2->cost, 0), 0
+            fn($total, $item) => $total + $item->cost, 0
         );
 
 
@@ -68,5 +87,10 @@ class StatsOverview extends BaseWidget
             Stat::make('Profit', number_format($profit)),
             Stat::make('Expenses', number_format($expenses)),
         ];
+    }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->role === 'admin';
     }
 }

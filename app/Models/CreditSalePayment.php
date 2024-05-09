@@ -10,7 +10,7 @@ class CreditSalePayment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['credit_sale_id', 'user_id', 'paid'];
+    protected $fillable = ['credit_sale_id', 'user_id', 'payment_method_id', 'paid'];
 
     public function creditSale():BelongsTo
     {
@@ -20,5 +20,10 @@ class CreditSalePayment extends Model
     public function user():BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 }

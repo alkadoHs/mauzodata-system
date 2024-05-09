@@ -24,12 +24,17 @@ class DamageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-archive-box-x-mark';
 
+    protected static ?int $navigationSort = 6;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('product_id')
-                    ->relationship('product', 'title', fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id))
+                    ->relationship('product', 'title', fn (Builder $query) => $query->where([
+                            ['team_id', Filament::getTenant()->id],
+                            ['stock', '>', 0]
+                        ]))
                     ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('stock')

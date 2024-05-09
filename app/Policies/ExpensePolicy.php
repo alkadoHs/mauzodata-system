@@ -39,7 +39,7 @@ class ExpensePolicy
      */
     public function update(User $user, Expense $expense): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -47,7 +47,7 @@ class ExpensePolicy
      */
     public function delete(User $user, Expense $expense): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -55,7 +55,7 @@ class ExpensePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**

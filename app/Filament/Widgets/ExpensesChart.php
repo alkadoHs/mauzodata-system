@@ -43,4 +43,9 @@ class ExpensesChart extends ChartWidget
     {
         return 'line';
     }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->role === 'admin';
+    }
 }

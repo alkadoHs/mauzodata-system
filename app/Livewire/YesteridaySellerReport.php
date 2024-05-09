@@ -16,7 +16,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
-class SellersReport extends Component implements HasForms, HasTable
+class YesteridaySellerReport extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -28,13 +28,13 @@ class SellersReport extends Component implements HasForms, HasTable
         return $table
             ->query(fn () => User::with([
                                     'orderItems' => function (Builder $query) {
-                                        $query->whereRelation('order', 'orders.status', 'paid')->whereMonth('order_items.created_at', now());
+                                        $query->whereRelation('order', 'orders.status', 'paid')->whereDate('order_items.created_at', now()->subDay());
                                     },
                                     'expenseItems' => function (Builder $query) {
-                                        $query->whereMonth('expense_items.created_at', now());
+                                        $query->whereDate('expense_items.created_at', now()->subDay());
                                     }, 
                                     'creditSalePayments' => function (Builder $query) {
-                                        $query->whereMonth('credit_sale_payments.created_at', now());
+                                        $query->whereDate('credit_sale_payments.created_at', now()->subDay());
                                     },
                                 ])
                                 ->whereRelation('teams', 'teams.id', Filament::getTenant()->id)

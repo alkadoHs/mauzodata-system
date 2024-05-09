@@ -40,7 +40,7 @@ class DamagePolicy
      */
     public function update(User $user, Damage $Damage): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -48,7 +48,7 @@ class DamagePolicy
      */
     public function delete(User $user, Damage $Damage): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -56,7 +56,7 @@ class DamagePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**

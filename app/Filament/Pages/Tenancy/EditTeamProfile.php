@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Tenancy;
  
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -30,6 +31,18 @@ class EditTeamProfile extends EditTenantProfile
                         TextInput::make('address')
                             ->required()
                             ->maxLength(100),
+                        FileUpload::make('logo_url')
+                        ->label('Branch Logo')
+                        ->avatar()
+                        ->imageEditor()
+                        ->imageEditorAspectRatios([
+                                '1:1',
+                            ])
+                        ->imageResizeMode('cover')
+                        // ->imageCropAspectRatio('16:9')
+                        ->imageResizeTargetWidth('200')
+                        ->imageResizeTargetHeight('200')
+                        ->previewable()
                     ])
             ]);
     }

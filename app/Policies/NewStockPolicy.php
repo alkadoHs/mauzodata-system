@@ -39,7 +39,7 @@ class NewStockPolicy
      */
     public function update(User $user, NewStock $newStock): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -47,7 +47,7 @@ class NewStockPolicy
      */
     public function delete(User $user, NewStock $newStock): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -55,7 +55,7 @@ class NewStockPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**

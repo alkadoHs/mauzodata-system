@@ -39,7 +39,7 @@ class CustomerPolicy
      */
     public function update(User $user, Customer $customer): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -47,7 +47,7 @@ class CustomerPolicy
      */
     public function delete(User $user, Customer $customer): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -55,7 +55,7 @@ class CustomerPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -63,7 +63,7 @@ class CustomerPolicy
      */
     public function forceDelete(User $user, Customer $customer): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -71,7 +71,7 @@ class CustomerPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
 }

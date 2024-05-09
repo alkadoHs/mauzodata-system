@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
@@ -20,9 +21,11 @@ class Dashboard extends BaseDashboard
             FilterAction::make()
                 ->form([
                     DatePicker::make('startDate')
-                        ->native(false),
+                        ->native(false)
+                        ->default(date('Y-m-d')),
                     DatePicker::make('endDate')
                         ->native(false),
+                    Checkbox::make('withCredits')
                 ]),
         ];
     }

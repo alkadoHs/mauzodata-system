@@ -23,6 +23,8 @@ class ExpenseExporter extends Exporter
                             fn ($acc, $item) => $acc + $item->cost, 0
                         ) 
                     ),
+            ExportColumn::make('paymentMethod.name')
+                ->label('ACCOUNT USED'),
             ExportColumn::make('created_at')
                 ->label(__('DATE')),
         ];

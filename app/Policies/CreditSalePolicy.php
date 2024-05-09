@@ -47,7 +47,7 @@ class CreditSalePolicy
      */
     public function delete(User $user, CreditSale $creditSale): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -55,7 +55,7 @@ class CreditSalePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -63,7 +63,7 @@ class CreditSalePolicy
      */
     public function forceDelete(User $user, CreditSale $creditSale): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
     /**
@@ -71,7 +71,7 @@ class CreditSalePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
 
 }

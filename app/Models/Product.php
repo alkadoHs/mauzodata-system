@@ -35,4 +35,14 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function damages(): HasMany
+    {
+        return $this->hasMany(Damage::class);
+    }
+
+    public function newStocks(): HasMany
+    {
+        return $this->hasMany(NewStock::class);
+    }
 }

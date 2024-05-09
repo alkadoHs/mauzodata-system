@@ -6,15 +6,20 @@ use App\Filament\Exports\ProductExporter;
 use App\Filament\Imports\ProductImporter;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Damage;
+use App\Models\NewStock;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Actions\ImportAction;
@@ -29,6 +34,8 @@ class ProductResource extends Resource
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
+
+    public static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -100,8 +107,8 @@ class ProductResource extends Resource
             ->headerActions([
                 ExportAction::make()
                     ->exporter(ProductExporter::class),
-                ImportAction::make()
-                    ->importer(ProductImporter::class)
+                // ImportAction::make()
+                //     ->importer(ProductImporter::class)
             ])
             ->paginated([10,25,50,100])
             ->defaultPaginationPageOption(25)
@@ -172,7 +179,39 @@ class ProductResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->before(
+                        function (Product $record, DeleteAction $action) {
+                            //prevent user from deleting this product if it is associated with these items.
+                            $orderItemsAssociated = OrderItem::where('product_id', $record->id)->get();
+                            $damagesAssociated = Damage::where('product_id', $record->id)->get();
+                            $newStocksAssociated = NewStock::where('product_id', $record->id)->get();
+
+                            if(count($orderItemsAssociated)) {
+                                Notification::make()
+                                    ->body('You can not delete this product because it is associated with order items.')
+                                    ->color('danger')
+                                    ->duration(10000)
+                                    ->send();
+                                return $action->halt();
+                            } elseif(count($damagesAssociated)) {
+                                Notification::make()
+                                    ->body('You can not delete this product because it is associated with damaged products.')
+                                    ->color('danger')
+                                    ->duration(10000)
+                                    ->send();
+                                return $action->halt();
+                            } elseif(count($newStocksAssociated)) {
+                                Notification::make()
+                                    ->body('You can not delete this product because it is associated with New stock products.')
+                                    ->color('danger')
+                                    ->duration(10000)
+                                    ->send();
+                                return $action->halt();
+                            }
+                            return $record;
+                        }
+                    ),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PaymentMethod extends Model
 {
@@ -21,5 +22,16 @@ class PaymentMethod extends Model
     public function orders(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function creditSalePayments(): HasMany
+    {
+        return $this->hasMany(CreditSalePayment::class);
+    }
+
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
     }
 }

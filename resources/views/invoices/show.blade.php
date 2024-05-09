@@ -24,7 +24,7 @@
             </div>
             <div class="company-info">
                 <div class="company-logo">
-                    <img src="/logo.png" alt="Company Logo" >
+                    <img src="/storage/{{ $invoice->team->logo_url }}" alt="Company Logo" >
                 </div>
                 <p><strong>Company Name:</strong> {{ $invoice->team->name}}</p>
                 <p><strong>Address:</strong> {{ $invoice->team->address }}</p>

@@ -13,7 +13,7 @@
         <!-- Styles -->
         @vite('resources/css/filament/app/theme.css')
     </head>
-    <body class="font-sans antialiased  h-dvh bg-slate-950 text-white/70">
+    <body class="font-figtree antialiased  h-dvh bg-slate-950 text-white/70">
         <header class="py-3">
             <nav>
                 <ul class="flex justify-between px-8">

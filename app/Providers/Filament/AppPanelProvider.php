@@ -9,6 +9,7 @@ use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
@@ -33,6 +34,7 @@ class AppPanelProvider extends PanelProvider
             ->path('app')
             ->spa()
             ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('300px')
             ->colors([
                 'primary' => Color::Green,
                 'success' => Color::Emerald,
@@ -42,12 +44,26 @@ class AppPanelProvider extends PanelProvider
             ->tenant(Team::class)
             ->tenantRegistration(RegisterTeam::class)
             ->tenantProfile(EditTeamProfile::class)
+            ->tenantMenuItems([
+                'register' => MenuItem::make()
+                                ->label('Register new branch')
+                                ->visible(fn (): bool => auth()->user()->role === 'admin'),
+                'profile' => MenuItem::make()
+                                ->label('Branch profile')
+                                ->icon('heroicon-o-building-storefront')
+                                ->visible(fn (): bool => auth()->user()->role === 'admin'),
+                                
+            ])
+            ->brandName('Mauzodata')
+            ->brandLogo('/mauzodata.svg')
+            ->brandLogoHeight('20')
             ->registration()
             ->login(Login::class)
             ->emailVerification()
             ->passwordReset()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([])
             // ->navigationItems([
             //     NavigationItem::make('Sellers Report')
