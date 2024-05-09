@@ -28,7 +28,6 @@
                 </div>
                 <p><strong>Company Name:</strong> {{ $invoice->team->name}}</p>
                 <p><strong>Address:</strong> {{ $invoice->team->address }}</p>
-                <p><strong>Tax ID:</strong> TAX123456</p>
                 <p><strong>Phone:</strong> {{ $invoice->team->phone}}</p>
             </div>
             <div class="invoice-details">

@@ -57,7 +57,7 @@ class AppPanelProvider extends PanelProvider
             ->brandName('Mauzodata')
             ->brandLogo('/mauzodata.svg')
             ->brandLogoHeight('20')
-            ->registration()
+            // ->registration()
             ->login(Login::class)
             ->emailVerification()
             ->passwordReset()
