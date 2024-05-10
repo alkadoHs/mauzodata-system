@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Order;
+use Filament\Facades\Filament;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -25,7 +26,7 @@ class RecentlyOrders extends BaseWidget
                 Order::query()
             )
             ->modifyQueryUsing(
-                fn (Builder $query) => auth()->user()->role !== 'admin' ? $query->whereDate('created_at', now())->latest()->limit(10): $query->latest()->limit(10)
+                fn (Builder $query) => auth()->user()->role !== 'admin' ? $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', now())->latest()->limit(10): $query->where('team_id', Filament::getTenant()->id)->latest()->limit(10)
                 )
             ->emptyStateHeading('No orders today.')
             ->emptyStateDescription('Once orders are available, will appear here!')
