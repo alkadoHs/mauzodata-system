@@ -338,7 +338,7 @@ class OrderResource extends Resource
 
     public static function getGlobalSearchEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()->with(['customer', 'orderItems']);
+        return parent::getGlobalSearchEloquentQuery()->with(['customer', 'orderItems'])->where('team_id', Filament::getTenant()->id);
     }
 
 
