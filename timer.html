@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Coming Soon | MauzoData Demo Account</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 3rem;
+                color: #333;
+            }
+
+            p {
+                font-size: 1.2rem;
+                color: #666;
+                margin-top: 20px;
+            }
+
+            .countdown {
+                font-size: 2rem;
+                color: #777;
+                margin-top: 30px;
+            }
+
+            @media (max-width: 768px) {
+                h1 {
+                    font-size: 2rem;
+                }
+                p {
+                    font-size: 1rem;
+                }
+                .countdown {
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Coming Soon</h1>
+            <p>
+                We're working hard to bring you the demo account for MauzoData.
+            </p>
+            <div class="countdown" id="countdown">Launching soon!</div>
+        </div>
+
+        <script>
+            // Countdown timer
+            const countdown = document.getElementById("countdown");
+            const launchDate = new Date("2024-05-12 00:00:00").getTime();
+
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = launchDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor(
+                    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                );
+                const minutes = Math.floor(
+                    (distance % (1000 * 60 * 60)) / (1000 * 60)
+                );
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdown.innerHTML = "We're live!";
+                }
+            }, 1000);
+        </script>
+    </body>
+</html>
