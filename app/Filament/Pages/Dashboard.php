@@ -20,8 +20,7 @@ class Dashboard extends BaseDashboard
                     Section::make()
                         ->schema([
                             DatePicker::make('startDate')
-                            ->native(false)
-                            ->default(now()),
+                            ->native(false),
                             DatePicker::make('endDate')
                             ->native(false),
                         ])
