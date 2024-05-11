@@ -32,7 +32,6 @@ class RegisterTeam extends RegisterTenant
                         ->maxLength(100),
                     FileUpload::make('logo_url')
                         ->label('Branch Logo')
-                        ->avatar()
                         ->imageEditor()
                         ->imageResizeMode('cover')
                         ->imageEditorAspectRatios(['1:1', '4:3'])

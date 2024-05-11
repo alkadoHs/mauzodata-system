@@ -33,16 +33,12 @@ class EditTeamProfile extends EditTenantProfile
                             ->maxLength(100),
                         FileUpload::make('logo_url')
                         ->label('Branch Logo')
-                        ->avatar()
                         ->imageEditor()
-                        ->imageEditorAspectRatios([
-                                '1:1',
-                            ])
                         ->imageResizeMode('cover')
-                        // ->imageCropAspectRatio('16:9')
-                        ->imageResizeTargetWidth('200')
-                        ->imageResizeTargetHeight('200')
-                        ->previewable()
+                        ->imageEditorAspectRatios(['1:1', '4:3'])
+                        ->imagePreviewHeight('250')
+                        ->minSize(10)
+                        ->maxSize(500)
                     ])
             ]);
     }
