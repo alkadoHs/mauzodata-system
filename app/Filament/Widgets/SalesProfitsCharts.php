@@ -13,7 +13,7 @@ class SalesProfitsCharts extends ChartWidget
 {
     protected static ?string $pollingInterval = null;
 
-    protected static ?string $heading = 'Sales Vs Profits';
+    protected static ?string $heading = 'Monthly Sales Vs Profits';
 
     protected static ?int $sort = 1;
 
@@ -25,7 +25,7 @@ class SalesProfitsCharts extends ChartWidget
 
         $orders = Order::where('team_id', Filament::getTenant()->id)->whereBetween(
             'created_at', [now()->subYear(), now()]
-        )->orderBy('created_at')->get();
+        )->get();
 
         // Group orders by month
         $ordersByMonth = $orders->groupBy(function ($order) {

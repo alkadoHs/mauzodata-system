@@ -62,7 +62,7 @@ class UserPolicy
      */
     public function delete(User $user): bool
     {
-        return $user->role === 'admin';
+        return $user->role === 'seo';
     }
 
     /**
