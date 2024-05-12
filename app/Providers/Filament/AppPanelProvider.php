@@ -58,7 +58,7 @@ class AppPanelProvider extends PanelProvider
             ->brandLogo('/mauzodata.svg')
             ->brandLogoHeight('20')
             ->login(Login::class)
-            ->registration()
+            // ->registration()
             ->emailVerification()
             ->passwordReset()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
