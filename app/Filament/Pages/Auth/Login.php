@@ -11,6 +11,8 @@ class Login extends BasePage
         parent::mount();
 
         $this->form->fill([
+            'email' => 'admin@mauzodata.com',
+            'password' => 'DemoAccount',
             'remember' => true,
         ]);
     }
