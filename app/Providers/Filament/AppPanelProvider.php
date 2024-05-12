@@ -31,7 +31,7 @@ class AppPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('app')
-            ->path('app')
+            ->path('')
             ->spa()
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('300px')
