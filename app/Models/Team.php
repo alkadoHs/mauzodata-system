@@ -64,4 +64,10 @@ class Team extends Model
     {
         return $this->hasMany(Damage::class);
     }
+
+
+    public function ProductTransfers(): HasMany
+    {
+        return $this->hasMany(ProductTransfer::class);
+    }
 }

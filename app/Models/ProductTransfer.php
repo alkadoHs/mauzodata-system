@@ -12,6 +12,7 @@ class ProductTransfer extends Model
 
     protected $fillable = [
         'team_id',
+        'to',
         'to_team_id',
         'to_user_id',
         'product_id',

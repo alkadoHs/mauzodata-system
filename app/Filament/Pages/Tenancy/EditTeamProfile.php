@@ -37,8 +37,7 @@ class EditTeamProfile extends EditTenantProfile
                         ->imageResizeMode('cover')
                         ->imageEditorAspectRatios(['1:1', '4:3'])
                         ->imagePreviewHeight('250')
-                        ->minSize(10)
-                        ->maxSize(500)
+                        ->maxSize(2000)
                     ])
             ]);
     }
