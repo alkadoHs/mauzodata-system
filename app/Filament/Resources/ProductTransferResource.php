@@ -84,6 +84,7 @@ class ProductTransferResource extends Resource
     {
         return $table
             ->query(ProductTransfer::query())
+            ->paginated([25, 50, 100])
             ->columns([
                 Tables\Columns\TextColumn::make('team.name')
                     ->label('From')

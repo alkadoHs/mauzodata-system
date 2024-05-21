@@ -60,6 +60,25 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     }
 
 
+    
+    
+    public function getTenants(Panel $panel): Collection
+    {
+        return $this->teams;
+    }
+ 
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return $this->teams()->whereKey($tenant)->exists();
+    }
+    /**
+     *
+     * @param Panel $panel
+     * @return bool
+     */
+    public function canAccessPanel(Panel $panel): bool {
+        return true;
+    }
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
@@ -95,22 +114,8 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         return $this->hasManyThrough(ExpenseItem::class, Expense::class);
     }
 
-
-    public function getTenants(Panel $panel): Collection
+    public function vendorProducts(): HasMany
     {
-        return $this->teams;
-    }
- 
-    public function canAccessTenant(Model $tenant): bool
-    {
-        return $this->teams()->whereKey($tenant)->exists();
-    }
-    /**
-     *
-     * @param Panel $panel
-     * @return bool
-     */
-    public function canAccessPanel(Panel $panel): bool {
-        return true;
+        return $this->hasMany(VendorProduct::class);
     }
 }

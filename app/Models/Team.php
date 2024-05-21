@@ -66,8 +66,13 @@ class Team extends Model
     }
 
 
-    public function ProductTransfers(): HasMany
+    public function productTransfers(): HasMany
     {
         return $this->hasMany(ProductTransfer::class);
+    }
+
+    public function vendorProducts(): HasMany
+    {
+        return $this->hasMany(VendorProduct::class);
     }
 }
