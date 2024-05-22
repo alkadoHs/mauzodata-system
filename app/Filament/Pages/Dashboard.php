@@ -24,7 +24,8 @@ class Dashboard extends BaseDashboard
                             DatePicker::make('endDate')
                             ->native(false),
                         ])
-                        ->columns(2),
+                        ->columns(2)
+                        ->visible(auth()->user()->role === 'admin'),
                 ]);
     }
 }
