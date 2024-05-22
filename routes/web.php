@@ -1,11 +1,15 @@
 <?php
 
-use App\Http\Controllers\InvoiceController;
-use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect('https://home.mauzodata.com');
-});
+Route::view('/', 'welcome');
 
-Route::get('/invoices/{order}', [InvoiceController::class, 'show'])->name('invoices.index')->middleware('auth');
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+require __DIR__.'/auth.php';
