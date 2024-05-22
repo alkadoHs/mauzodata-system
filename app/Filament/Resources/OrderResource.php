@@ -99,7 +99,7 @@ class OrderResource extends Resource
                                 ->searchable()
                                 ->preload()
                                 ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                                ->afterStateUpdated(fn (Set $set, int $state) => $set('price', number_format(Product::find($state)?->sale_price ?? 0)))
+                                ->afterStateUpdated(fn (Set $set, ?int $state) => $set('price', number_format(Product::find($state)?->sale_price ?? 0)))
                                 ->suffix(fn (?int $state): string => Product::find($state)?->unit ?? 'each')
                                 ->required(),
                             TextInput::make('quantity')
