@@ -5,6 +5,7 @@ namespace App\Filament\Pages\Tenancy;
 use App\Models\Team;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
@@ -23,6 +24,16 @@ class RegisterTeam extends RegisterTenant
                     TextInput::make('name')
                         ->maxLength(40)
                         ->required(),
+                    Select::make('categoty')
+                        ->options([
+                            'shop' => 'Shop',
+                            'store' => 'Store',
+                            'vendors' => 'Vendors Branch',
+                        ])
+                        ->default('shop')
+                        ->required()
+                        ->disablePlaceholderSelection()
+                        ->native(false),
                     TextInput::make('phone')
                         ->numeric()
                         ->maxLength(15)

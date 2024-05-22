@@ -4,6 +4,7 @@ namespace App\Filament\Pages\Tenancy;
  
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\EditTenantProfile;
@@ -24,6 +25,15 @@ class EditTeamProfile extends EditTenantProfile
                         TextInput::make('name')
                             ->maxLength(40)
                             ->required(),
+                        Select::make('categoty')
+                            ->options([
+                                'shop' => 'Shop',
+                                'store' => 'Store',
+                                'vendors' => 'Vendors Branch',
+                            ])
+                            ->required()
+                            ->disablePlaceholderSelection()
+                            ->native(false),
                         TextInput::make('phone')
                             ->numeric()
                             ->maxLength(15)

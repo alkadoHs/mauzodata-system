@@ -7,6 +7,8 @@ use App\Filament\Resources\ProductTransferResource\RelationManagers;
 use App\Models\Product;
 use App\Models\ProductTransfer;
 use App\Models\Team;
+use App\Models\User;
+use App\Models\VendorProduct;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -151,6 +153,24 @@ class ProductTransferResource extends Resource
                             Notification::make()
                                 ->success()
                                 ->title("Transfered successfully")
+                                ->send();
+                        } elseif($record['to'] === 'vendor') {
+                            //check if product exists to vendor
+                            $vendorProduct = VendorProduct::where('product_id', $record['product_id'])->orWhereRelation('product', 'product_id', $product->product_id)->first();
+
+                            if($vendorProduct && $state === 'approved') {
+                                $vendorProduct->increment('stock', $record['stock']);
+                            } elseif(!$vendorProduct && $state === 'approved') {
+                                VendorProduct::create([
+                                    'team_id' => User::find($record['to_user_id'])->teams()->first()->id,
+                                    'user_id' => $record['to_user_id'],
+                                    'product_id' => $record['product_id'],
+                                    'stock' => $record['stock'],
+                                ]);
+                            }
+                            Notification::make()
+                                ->success()
+                                ->title("Transfered to vendor successfully")
                                 ->send();
                         }
                     }),

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vendor_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('team_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->restrictOnDelete();
             $table->decimal('stock');
