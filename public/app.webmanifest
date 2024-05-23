@@ -1,0 +1,113 @@
+{
+    "name": "MauzoData",
+    "short_name": "MauzoData",
+    "description": "MauzoData - Comprehensive Sales Management Software",
+    "start_url": "/app",
+    "display": "standalone",
+    "background_color": "#030712",
+    "theme_color": "#030712",
+    "icons": [
+        {
+            "src": "/icons/mauzodata-icon3.svg",
+            "sizes": "144x144",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/mauzodata-icon1.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/mauzodata-icon2.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/mauzodata-icon2.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/mauzodata-icon4.svg",
+            "sizes": "430x430",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
+        }
+    ],
+    "lang": "sw-TZ",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "screenshots": [
+        {
+            "src": "/open-graph.png",
+            "sizes": "640x480",
+            "type": "image/png",
+            "label": "Dashboard",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "/images/screenshot2.png",
+            "sizes": "640x480",
+            "type": "image/png",
+            "label": "Sales Overview"
+        },
+        {
+            "src": "/images/screenshot3.png",
+            "sizes": "1340x651",
+            "type": "image/png",
+            "label": "Sales Overview",
+            "form_factor": "wide"
+        }
+    ],
+    "categories": [
+        "business",
+        "productivity",
+        "software",
+        "swahili",
+        "shop",
+        "store"
+    ],
+    "shortcuts": [
+        {
+            "name": "View Sales",
+            "short_name": "Sales",
+            "description": "Quick access to sales overview",
+            "url": "/app",
+            "icons": [
+                {
+                    "src": "/icons/sales-icon.png",
+                    "sizes": "96x96",
+                    "type": "image/png",
+                    "purpose": "any"
+                }
+            ]
+        },
+        {
+            "name": "Add New Sale",
+            "short_name": "New Sale",
+            "description": "Add a new sales entry",
+            "url": "/app",
+            "icons": [
+                {
+                    "src": "/icons/sales-icon.png",
+                    "sizes": "96x96",
+                    "type": "image/png",
+                    "purpose": "any"
+                }
+            ]
+        }
+    ],
+    "dir": "ltr",
+    "related_applications": [
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=com.mauzodata",
+            "id": "com.mauzodata"
+        }
+    ],
+    "prefer_related_applications": false
+}

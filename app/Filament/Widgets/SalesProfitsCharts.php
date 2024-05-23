@@ -53,7 +53,7 @@ class SalesProfitsCharts extends ChartWidget
             [
                 'label' => 'Sales',
                 'data' => $data ,
-                'backgroundColor' => '#4ade80',
+                'backgroundColor' => '#bd7776',
 
             ],
             [

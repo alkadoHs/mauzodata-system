@@ -36,11 +36,23 @@ class AppPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('300px')
             ->colors([
-                'primary' => Color::Green,
-                'success' => Color::Emerald,
+                'primary' => [
+                    50 => "#faf6f6",
+                    100 => "#f6eaea",
+                    200 => "#efd9d9",
+                    300 => "#e2c0bf",
+                    400 => "#d6a6a6",
+                    500 => "#bd7776",
+                    600 => "#a75d5b",
+                    700 => "#8b4b4a",
+                    800 => "#744140",
+                    900 => "#623b3a",
+                    950 => "#341c1b",
+                ],
+                'success' => Color::Blue,
                 'badge' => Color::Sky,
             ])
-            ->font('Inter')
+            ->font('Inter Tight')
             ->tenant(Team::class)
             ->tenantRegistration(RegisterTeam::class)
             ->tenantProfile(EditTeamProfile::class)
