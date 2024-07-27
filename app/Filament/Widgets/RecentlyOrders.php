@@ -23,8 +23,8 @@ class RecentlyOrders extends BaseWidget
 
     public function table(Table $table): Table
     {
-        $orderItems = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
-    ->groupBy('product_id')
+    //     $orderItems = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+    // ->groupBy('product_id');
         return $table
             ->query(
                 Order::query()
