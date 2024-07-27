@@ -7,7 +7,9 @@ use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\Widgets\OrderStats;
 use App\Models\Order;
+use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -51,7 +53,7 @@ class OrderResource extends Resource
                             ->default(auth()->id())
                             ->required(),
                         Forms\Components\Select::make('customer_id')
-                            ->relationship('customer', 'name', fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id))
+                            ->relationship('customer', 'name')
                             ->createOptionForm([
                                 Forms\Components\TextInput::make('name')
                                     ->required()
@@ -95,7 +97,7 @@ class OrderResource extends Resource
                             Select::make('product_id')
                                 ->label(__('Product'))
                                 ->placeholder('Select product')
-                                ->relationship('product', 'title', fn (Builder $query) => $query->where([['team_id',Filament::getTenant()->id]]))
+                                ->relationship('product', 'title')
                                 ->searchable()
                                 ->preload()
                                 ->disableOptionsWhenSelectedInSiblingRepeaterItems()
@@ -151,8 +153,9 @@ class OrderResource extends Resource
                         Forms\Components\TextInput::make('subtotal')
                             ->readOnly(),
                         Forms\Components\Select::make('payment_method_id')
-                            ->relationship('paymentMethod', 'name', fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id))
+                            ->relationship('paymentMethod', 'name')
                             ->native(false)
+                            ->default('cash')
                             ->required(),
                         Forms\Components\Select::make('status')
                             ->options([
@@ -226,7 +229,7 @@ class OrderResource extends Resource
                 Tables\Filters\SelectFilter::make('user_id')
                     ->label('Filter by seller')
                     ->visible(auth()->user()->role === 'admin')
-                    ->options(fn () => Filament::getTenant()->users()->get()->pluck('name', 'id'))
+                    ->options(fn () => User::get()->pluck('name', 'id'))
                     ->searchable(),
                 Tables\Filters\SelectFilter::make('status')
                         ->options([
@@ -236,7 +239,7 @@ class OrderResource extends Resource
                         ->native(false),
                 Tables\Filters\SelectFilter::make('payment_method_id')
                     ->label('Payment method')
-                    ->options(fn () => Filament::getTenant()->paymentMethods()->get()->pluck('name', 'id'))
+                    ->options(fn () => PaymentMethod::get()->pluck('name', 'id'))
                     ->searchable(),
                 // Tables\Filters\TrashedFilter::make(),
 

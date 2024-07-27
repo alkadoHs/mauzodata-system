@@ -32,7 +32,6 @@ class DamageResource extends Resource
             ->schema([
                 Forms\Components\Select::make('product_id')
                     ->relationship('product', 'title', fn (Builder $query) => $query->where([
-                            ['team_id', Filament::getTenant()->id],
                             ['stock', '>', 0]
                         ]))
                     ->searchable()

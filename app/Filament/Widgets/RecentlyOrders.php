@@ -16,7 +16,7 @@ class RecentlyOrders extends BaseWidget
 
     protected static ?string $pollingInterval = null;
 
-    protected static ?int $sort = 11;
+    protected static ?int $sort = 14;
 
 
     public function table(Table $table): Table
@@ -26,10 +26,11 @@ class RecentlyOrders extends BaseWidget
                 Order::query()
             )
             ->modifyQueryUsing(
-                fn (Builder $query) => auth()->user()->role !== 'admin' ? $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', now())->latest()->limit(10): $query->where('team_id', Filament::getTenant()->id)->latest()->limit(10)
+                fn (Builder $query) => auth()->user()->role !== 'admin' ? $query->whereDate('created_at', now())->latest()->limit(10): $query->where('user_id', auth()->user()->id)->latest()->limit(10)
                 )
             ->emptyStateHeading('No orders today.')
             ->emptyStateDescription('Once orders are available, will appear here!')
+            ->paginated([10])
             ->columns([
                 TextColumn::make('user.name')
                     ->label(__('Seller'))

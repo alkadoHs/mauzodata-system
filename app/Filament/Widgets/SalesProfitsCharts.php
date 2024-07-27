@@ -23,7 +23,7 @@ class SalesProfitsCharts extends ChartWidget
        $data = [];
        $profits = [];
 
-        $orders = Order::where('team_id', Filament::getTenant()->id)->whereBetween(
+        $orders = Order::where('status', 'paid')->whereBetween(
             'created_at', [now()->subYear(), now()]
         )->orderBy('created_at')->get();
 

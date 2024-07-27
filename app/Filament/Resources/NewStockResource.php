@@ -31,7 +31,7 @@ class NewStockResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('product_id')
-                    ->relationship('product', 'title', fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id))
+                    ->relationship('product', 'title')
                     ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('stock')

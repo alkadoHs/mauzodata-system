@@ -7,6 +7,7 @@ use App\Filament\Resources\CreditSaleResource\Pages;
 use App\Filament\Resources\CreditSaleResource\RelationManagers;
 use App\Filament\Resources\CreditSaleResource\Widgets\CreditSaleStats;
 use App\Models\CreditSale;
+use App\Models\User;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -100,7 +101,7 @@ class CreditSaleResource extends Resource
                 Tables\Filters\SelectFilter::make('user_id')
                     ->label('Filter by seller')
                     ->visible(auth()->user()->role === 'admin')
-                    ->options(fn () => Filament::getTenant()->users()->get()->pluck('name', 'id'))
+                    ->options(fn () => User::get()->pluck('name', 'id'))
                     ->searchable(),
                 // Tables\Filters\SelectFilter::make('status')
                 //         ->options([

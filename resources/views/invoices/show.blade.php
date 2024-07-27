@@ -26,14 +26,14 @@
                 <div class="company-logo">
                     <img src="/storage/{{ $invoice->team->logo_url }}" alt="Company Logo" >
                 </div>
-                <p><strong>Company Name:</strong> {{ $invoice->team->name}}</p>
-                <p><strong>Address:</strong> {{ $invoice->team->address }}</p>
-                <p><strong>Phone:</strong> {{ $invoice->team->phone}}</p>
+                <p><strong>Company Name:</strong> {{ $invoice?->team->name}}</p>
+                <p><strong>Address:</strong> {{ $invoice?->team->address }}</p>
+                <p><strong>Phone:</strong> {{ $invoice?->team->phone}}</p>
             </div>
             <div class="invoice-details">
                 <p><strong>Invoice Number:</strong> INV-{{ $invoice->invoice_number }}</p>
                 <p><strong>Date:</strong> {{ date('d/m/Y', strtotime($invoice->created_at)) }}</p>
-                <p><strong>Customer:</strong> {{ $invoice->customer->name }}</p>
+                <p><strong>Customer:</strong> {{ $invoice?->customer?->name }}</p>
             </div>
             <table class="invoice-table">
                 <thead>

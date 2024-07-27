@@ -27,7 +27,7 @@ class StatsOverview extends BaseWidget
         $endDate = $this->filters['endDate'] ?? null;
 
         $data = Trend::query(Order::query()
-                            ->where('team_id', Filament::getTenant()->id)
+                            ->where('status', 'paid')
                         )
                     ->between(
                         start: now()->subYear(),
@@ -38,39 +38,39 @@ class StatsOverview extends BaseWidget
                     
         $sales = Order::query()
             ->when(!$startDate && !$endDate, function (Builder $query) {
-                return $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', now());
+                return $query->where('status', 'paid')->whereDate('created_at', now());
             })
             ->when(
-            $startDate, fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', '>=', $startDate)
+            $startDate, fn (Builder $query) => $query->where('status', 'paid')->whereDate('created_at', '>=', $startDate)
             )
             ->when(
-            $endDate, fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id)->whereDate('created_at', '<=', $endDate)
+            $endDate, fn (Builder $query) => $query->where('status', 'paid')->whereDate('created_at', '<=', $endDate)
             )
             ->get()->reduce(
                     fn($total, $item) => $total + $item->orderItems->reduce(fn($total2, $item2) => $total2 + $item2->total_price, 0), 0);
 
         $profit = OrderItem::query()
             ->when(!$startDate && !$endDate, function (Builder $query) {
-                return $query->whereRelation('order', 'team_id', Filament::getTenant()->id)->whereDate('created_at', now());
+                return $query->whereRelation('order', 'status', 'paid')->whereDate('created_at', now());
             })
             ->when($startDate, function (Builder $query) use($startDate) {
-                return $query->whereRelation('order', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '>=', $startDate);
+                return $query->whereRelation('order', 'status', 'paid')->whereDate('created_at', '>=', $startDate);
             }) 
             ->when($endDate, function (Builder $query) use($endDate) {
-                return $query->whereRelation('order', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '<=', $endDate);
+                return $query->whereRelation('order', 'status', 'paid')->whereDate('created_at', '<=', $endDate);
             })
             ->get()->reduce(
                     fn($total, $item) => $total + $item->profit, 0);
 
         $expenses = ExpenseItem::query()
             ->when(!$startDate && !$endDate, function (Builder $query) {
-                return $query->whereRelation('expense', 'team_id', Filament::getTenant()->id)->whereDate('created_at', now());
+                return $query->whereDate('created_at', now());
             })
             ->when($startDate, function (Builder $query) use($startDate) {
-                return $query->whereRelation('expense', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '>=', $startDate);
+                return $query->whereDate('created_at', '>=', $startDate);
             })
             ->when($endDate, function (Builder $query) use($endDate) {
-                return $query->whereRelation('expense', 'team_id', Filament::getTenant()->id)->whereDate('created_at', '<=', $endDate);
+                return $query->whereDate('created_at', '<=', $endDate);
             })
             ->get()->reduce(
             fn($total, $item) => $total + $item->cost, 0

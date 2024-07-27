@@ -6,6 +6,7 @@ use App\Filament\Exports\ExpenseExporter;
 use App\Filament\Resources\ExpenseResource\Pages;
 use App\Filament\Resources\ExpenseResource\RelationManagers;
 use App\Models\Expense;
+use App\Models\User;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -41,7 +42,6 @@ class ExpenseResource extends Resource
                     ->relationship(
                         name: 'paymentMethod',
                         titleAttribute: 'name',
-                        modifyQueryUsing: fn (Builder $query) => $query->where('team_id', Filament::getTenant()->id)
                     )
                     ->native(false)
                     ->required(),
@@ -96,7 +96,7 @@ class ExpenseResource extends Resource
                 Tables\Filters\SelectFilter::make('user_id')
                     ->label('Filter by seller')
                     ->visible(auth()->user()->role === 'admin')
-                    ->options(fn () => Filament::getTenant()->users()->get()->pluck('name', 'id'))
+                    ->options(fn () => User::get()->pluck('name', 'id'))
                     ->searchable(),
                 // Tables\Filters\TrashedFilter::make(),
 
