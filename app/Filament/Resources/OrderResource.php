@@ -49,8 +49,13 @@ class OrderResource extends Resource
                 Section::make()
                     ->columns(2)
                     ->schema([
-                        Forms\Components\Hidden::make('user_id')
+                        Forms\Components\Select::make('user_id')
+                            ->label('Seller')
                             ->default(auth()->id())
+                            ->options(
+                                fn () => User::where('role', 'vendor')->pluck('name', 'id')
+                            )
+                            ->searchable()
                             ->required(),
                         Forms\Components\Select::make('customer_id')
                             ->relationship('customer', 'name')

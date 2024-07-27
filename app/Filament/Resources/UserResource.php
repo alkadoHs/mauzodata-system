@@ -38,6 +38,7 @@ class UserResource extends Resource
                     ->options([
                         'admin' => 'Admin',
                         'seller' => 'Seller',
+                        'vendor' => 'Vendor'
                     ])
                     ->native(false)
                     ->required(),

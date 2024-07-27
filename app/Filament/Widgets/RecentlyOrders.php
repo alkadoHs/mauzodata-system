@@ -9,6 +9,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Models\OrderItem;
+use Illuminate\Support\Facades\DB;
 
 class RecentlyOrders extends BaseWidget
 {
@@ -21,13 +23,12 @@ class RecentlyOrders extends BaseWidget
 
     public function table(Table $table): Table
     {
+        $orderItems = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+    ->groupBy('product_id')
         return $table
             ->query(
                 Order::query()
             )
-            ->modifyQueryUsing(
-                fn (Builder $query) => auth()->user()->role !== 'admin' ? $query->whereDate('created_at', now())->latest()->limit(10): $query->where('user_id', auth()->user()->id)->latest()->limit(10)
-                )
             ->emptyStateHeading('No orders today.')
             ->emptyStateDescription('Once orders are available, will appear here!')
             ->paginated([10])
