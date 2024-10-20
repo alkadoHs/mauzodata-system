@@ -33,6 +33,7 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('')
             ->spa()
+            ->registration()
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('300px')
             ->colors([
@@ -55,7 +56,7 @@ class AppPanelProvider extends PanelProvider
                                 
             ])
             ->brandName('Mauzodata')
-            ->brandLogo('/mauzodata.svg')
+            // ->brandLogo('/mauzodata.svg')
             ->brandLogoHeight('20')
             ->login(Login::class)
             // ->registration()
