@@ -35,6 +35,7 @@ class AppPanelProvider extends PanelProvider
             ->spa()
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('300px')
+            ->registration()
             ->colors([
                 'primary' => [
                     50 => "#faf6f6",
